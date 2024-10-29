@@ -32,10 +32,11 @@ public class Order {
         // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
 
         picker.external.DecreaseStockCommand decreaseStockCommand = new picker.external.DecreaseStockCommand();
-        // mappings goes here
+        decreaseStockCommand.setQty(getQty()); 
+
         OrderApplication.applicationContext
             .getBean(picker.external.InventoryService.class)
-            .decreaseStock(/* get???(), */decreaseStockCommand);
+            .decreaseStock(getProductId(), decreaseStockCommand);
 
         OrderPlaced orderPlaced = new OrderPlaced(this);
         orderPlaced.publishAfterCommit();
